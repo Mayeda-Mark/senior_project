@@ -7,6 +7,12 @@ router.get('/login', (req, res) => {
     });
 });
 
+router.get('/editHome', (req, res) => {
+    res.render('editHome', {
+        title: "Welcome"
+    });
+});
+
 router.get('/editCalendar', (req, res) => {
     res.render('editCalendar', {
         title: 'Edit Calendar'
@@ -15,7 +21,13 @@ router.get('/editCalendar', (req, res) => {
 
 router.get('/editStock', (req,res) => {
     res.render('editStock', {
-        title: 'edit Stock'
+        title: 'Edit Stock'
+    });
+});
+
+router.get('/editUpdates', (req,res) => {
+    res.render('editUpdates', {
+        title: 'Edit Updates'
     });
 });
 

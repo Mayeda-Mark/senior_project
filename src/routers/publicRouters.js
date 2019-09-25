@@ -25,4 +25,10 @@ router.get('/stock', (req, res) => {
     });
 });
 
+router.get('/updates', (req, res) => {
+    res.render('updates', {
+        title: 'Updates'
+    });
+});
+
 module.exports = router
