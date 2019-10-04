@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Edit Stock</title>
+    </head>
+    <body>
+        {{>editHeaders}}
+        <hr>
+        {{>stockTable}}
+        <hr>
+        <h1>Add an Item</h1>
+        <form class="inputText" action="post" id="addStock">
+            <select name="stock" id="dropDown">
+                <option value="" selected>-Select-</option>
+                {{#each dropdown}}
+                <option>{{this.product_name}}</option>
+                {{/each}}
+            </select>
+            <input id="itemName" type="text" maxlength="25" size="25" value="Enter Your Title">
+            <br>
+            <textarea name="itemDescription" id="itemDescription" cols="76" rows="10">Enter Your Updates</textarea>
+            <br>
+            <input id="price" type="text" size="6" value="Price">
+            <input id="quantity" type="text" size="6" value="Quantity">
+        </form>
+    </body>
+</html>

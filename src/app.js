@@ -1,6 +1,5 @@
 const path = require('path');
-const pg = require('pg');
-const Pool = require('pg-pool');
+const { Pool } = require('pg');
 const express = require('express');
 const hbs = require('hbs');
 const publicRouters = require('./routers/publicRouters');
@@ -25,15 +24,19 @@ app.use(express.json());
 app.use(publicRouters);
 app.use(adminRouters);
 
-var sql = 'SELECT * FROM test WHERE id = 1';
-pool.query(sql, (err, result)=>{
-    if(err){
-        console.log('There was an error!');
-        console.log(err);
-    }
-    console.log('Back from DB');
-    console.log(result.rows);
-});
+var sql = "SELECT * FROM Test";
+
+// pool.query(sql, function(err, result) {
+//     // If an error occurred...
+//     if (err) {
+//         console.log("Error in query: ")
+//         return console.log(err);
+//     }
+
+//     // Log this to the console for debugging purposes.
+//     console.log("Back from DB with result:");
+//     console.log(result.rows);
+// });
 
 app.listen(port, () => {
     console.log('Server is up on port ' + port);

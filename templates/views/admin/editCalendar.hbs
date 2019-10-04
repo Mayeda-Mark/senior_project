@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Edit Calendar</title>
+    </head>
+    <body>
+        {{>editHeaders}}
+        <hr>
+        <h1>New Event</h1>
+        <form class="inputText" action="" id="addStock">
+            <select name="events" id="dropDown">
+                <option value="" selected>-Select-</option>
+            </select>
+            <input id="eventName" type="text" maxlength="100" size="100" value="Enter Your Event Name">
+            <br>
+            <input id="month" type="text" size="2" maxlength="2" value="MM">/
+            <input type="text" id="day" size="2" maxlength="2" value="DD">/
+            <input id="year" type="text" size="4" maxlength="4" value="YYYY">
+            <br>
+            <hr>
+
+        </form>
+    </body>
+</html>
+
+{{!-- CREATE TABLE Calendar (   
+id serial  NOT NULL,    
+Event_name varchar(100)  NOT NULL, 
+Week_long boolean NOT NULL,
+Year int NOT NULL,  
+Month varchar(10) NOT NULL,  
+Day int NOT NULL,  
+CONSTRAINT Calendar_pk PRIMARY KEY (id)
+); --}}

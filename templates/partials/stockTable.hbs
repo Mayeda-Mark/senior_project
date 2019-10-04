@@ -1,0 +1,18 @@
+<stockTable>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+        {{#each table}}
+        <tr>
+            <td>{{this.product_name}}</td>
+            <td>{{this.description}}</td>
+            <td>{{this.price}}</td>
+            <td>{{this.inventory}}</td>
+        </tr>
+        {{/each}}
+    </table>
+</stockTable>
