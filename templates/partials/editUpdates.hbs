@@ -1,0 +1,11 @@
+<updates>
+    {{#each updates}}
+    <form action="post" class="inputtext" id="update">
+        <input type="text" id="updateTitle" maxlength="100" size="101" value="{{this.title}}">
+        <br>
+        <textarea name="updateText" id="updateText" cols="76" rows="10">{{this.update_text}}</textarea>
+        <input type="submit" value="Edit Update">
+    </form>
+    <hr>
+    {{/each}}
+</updates>

@@ -24,11 +24,63 @@ router.get('/editCalendar', (req, res) => {
 });
 
 router.get('/editStock', (req,res) => {
-    db.getStockDropdown((error, result) => {
+    db.getStockDropdown((error, result1) => {
         db.getStock((error, result2) => {
             res.render('admin/editStock', {
                 title: 'Edit Stock',
-                dropdown: result,
+                dropdown: result1,
+                table: result2 
+            });
+        });
+    });
+});
+
+router.get('/addStock', (req,res) => {
+    const itemName = req.query.itemName;
+    const itemdescription = req.query.itemDescription;
+    const price = req.query.price;
+    const quantity = req.query.quantity;
+    console.log(itemName);
+    console.log(itemdescription);
+    console.log(price);
+    console.log(quantity);
+    db.addStock(itemName, itemdescription, price, quantity);
+    db.getStockDropdown((error, result1) => {
+        db.getStock((error, result2) => {
+            res.render('admin/editStock', {
+                title: 'Edit Stock',
+                dropdown: result1,
+                table: result2 
+            });
+        });
+    });
+});
+
+router.get('/removeStock', (req, res) => {
+    const itemName = req.query.stock;
+    db.removeStock(itemName);
+    db.getStockDropdown((error, result1) => {
+        db.getStock((error, result2) => {
+            res.render('admin/editStock', {
+                title: 'Edit Stock',
+                dropdown: result1,
+                table: result2 
+            });
+        });
+    });
+});
+
+router.get('/updateStock', (req, res) => {
+    const itemName = req.query.itemName;
+    const itemDescription = req.query.itemDescription;
+    const price = req.query.price;
+    const quantity = req.query.quantity;
+    db.updateStock(itemName, itemDescription, price, quantity);
+    db.getStockDropdown((error, result1) => {
+        db.getStock((error, result2) => {
+            res.render('admin/editStock', {
+                title: 'Edit Stock',
+                dropdown: result1,
                 table: result2 
             });
         });
@@ -36,13 +88,17 @@ router.get('/editStock', (req,res) => {
 });
 
 router.get('/editUpdates', (req,res) => {
-    db.getUpdates((error, result) => {
-        res.render('admin/editUpdates', {
-            title: 'Edit Updates',
-            updates: result
+    db.updateDropdown((error1, result1) => {
+        db.getUpdates((error2, result2) => {
+            res.render('admin/editUpdates', {
+                title: 'Edit Updates',
+                dropdown: result1,
+                updates: result2
+            });
         });
     });
 });
+
 
 router.post('/editStock'), (req, res) => {
 

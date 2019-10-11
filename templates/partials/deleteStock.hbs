@@ -1,0 +1,12 @@
+<deleteStock>
+    <form class="dropDown" method="get" action="removeStock" id="removeStock">
+        <select name="stock" id="dropDown">
+                <option value="" selected>-Select-</option>
+                {{#each dropdown}}
+                <option value="{{this.product_name}}">{{this.product_name}}</option>
+                {{/each}}
+            </select>
+        <br>
+        <button type="submit" form="removeStock">Submit</button>
+    </form>
+</deleteStock>

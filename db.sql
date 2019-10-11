@@ -1,12 +1,3 @@
-CREATE TABLE Stock (   
-id serial  NOT NULL,    
-Product_name varchar(100)  NOT NULL,    
-Dscription varchar(2000)  NOT NULL,    
-Price float(4)  NOT NULL,    
-Inventory int  NOT NULL,  
-CONSTRAINT Stock_pk PRIMARY KEY (id)
-);
-
 CREATE TABLE Calendar (   
 id serial  NOT NULL,    
 Event_name varchar(100)  NOT NULL, 
@@ -20,6 +11,7 @@ CONSTRAINT Calendar_pk PRIMARY KEY (id)
 CREATE TABLE Updates (   
 id serial  NOT NULL,    
 Title varchar(100)  NOT NULL,    
+Date DATE NOT NULL,
 Update_text varchar(2000)  NOT NULL,   
 CONSTRAINT Updates_pk PRIMARY KEY (id)
 );
@@ -34,7 +26,7 @@ CREATE TABLE Stock (
 id SERIAL NOT NULL,    
 Product_name varchar(100)  NOT NULL,    
 Description varchar(2000)  NOT NULL,    
-Price float(4)  NOT NULL,    
+Price money  NOT NULL,    
 Inventory int  NOT NULL,  
 CONSTRAINT Stock_pk PRIMARY KEY (id)
 ); 
