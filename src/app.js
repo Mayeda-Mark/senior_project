@@ -1,11 +1,9 @@
 const path = require('path');
-const { Pool } = require('pg');
 const express = require('express');
 const hbs = require('hbs');
 const publicRouters = require('./routers/publicRouters');
 const adminRouters = require('./routers/adminRouters');
-const connectionString = process.env.DATABASE_URL || 'postgres://shrrdpdlinqgpf:27ffb3fc195dd896f00335db1c2b4fcbe229c23a3255cd1e5dcec86373faa3ee@ec2-54-235-180-123.compute-1.amazonaws.com:5432/defe8vag2516cd?ssl=true';
-const pool = new Pool({connectionString: connectionString});
+const bodyParser = require('body-parser');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -15,6 +13,12 @@ const viewsPath = path.join(__dirname, '../templates/views');
 const partialsPath = path.join(__dirname, '../templates/partials');
 
 app.use(express.static(publicDirectoryPath));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(express.json());
+app.use(express.urlencoded());
 
 app.set('view engine', 'hbs');
 app.set('views', viewsPath);

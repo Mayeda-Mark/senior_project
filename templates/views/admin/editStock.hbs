@@ -13,15 +13,15 @@
         <h1>Edit an Item</h1>
         {{>editItems}}
         <h1>Add an Item</h1>
-        <form class="inputText" method="get" action="addStock" id="addStock">
+        <form class="inputText" method="post" action="editStock" id="addStock" enctype="multipart/form-data">
             <input name="itemName" id="itemName" type="text" maxlength="25" size="25" value="Enter Your Title">
             <br>
             <textarea name="itemDescription" id="itemDescription" cols="76" rows="10">Enter Your Updates</textarea>
             <br>
             <input name="price" id="price" type="text" size="6" value="Price">
             <input name="quantity" id="quantity" type="text" size="6" value="Quantity">
-            Add Image:<input type="file" id="stockImage">
             <br>
+            Add Image:<input type="file" id="stockImg" name="stockImg" />
             <button type="submit" form="addStock">Submit</button>
         </form>
     </body>

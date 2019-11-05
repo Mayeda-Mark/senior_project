@@ -2,33 +2,68 @@
 <html>
     <head>
         <title>Edit Calendar</title>
+        {{>displayCalendar}}
     </head>
     <body>
         {{>editHeaders}}
         <hr>
+        <div id="calendar"></div>
+        <hr>
         <h1>New Event</h1>
-        <form class="inputText" action="" id="addStock">
-            <select name="events" id="dropDown">
-                <option value="" selected>-Select-</option>
+        <form class="inputText" action="editCalendar" method="POST" id="addEvent">
+            <input name="eventName" type="text" maxlength="100" size="100" value="Enter Your Event Name">
+            <br>
+            Start Date:
+            <input name="sMonth" type="text" size="2" maxlength="2" value="MM">/
+            <input name="sDay" type="text" size="2" maxlength="2" value="DD">/
+            <input name="sYear" type="text" size="4" maxlength="4" value="YYYY">
+            <br>
+            End Date (Leave blank if event is just one day long):
+            <input name="eMonth" type="text" size="2" maxlength="2" value="MM">/
+            <input name="eDay" type="text" size="2" maxlength="2" value="DD">/
+            <input name="eYear" type="text" size="4" maxlength="4" value="YYYY">
+            <br>
+            Days of the Week:
+            <input type="checkbox" name="daysOfWeek" value="0">Sunday
+            <input type="checkbox" name="daysOfWeek" value="1">Monday
+            <input type="checkbox" name="daysOfWeek" value="2">Tuesday
+            <input type="checkbox" name="daysOfWeek" value="3">Wednesday
+            <input type="checkbox" name="daysOfWeek" value="4">Thursday
+            <input type="checkbox" name="daysOfWeek" value="5">Friday
+            <input type="checkbox" name="daysOfWeek" value="6">Saturday
+            <br>
+            Start Recurrance:
+            <input name="sRecurMonth" type="text" size="2" maxlength="2" value="MM">/
+            <input name="sRecurDay" type="text" size="2" maxlength="2" value="DD">/
+            <input name="sRecurYear" type="text" size="4" maxlength="4" value="YYYY">
+            <br>
+            End Recurrance:
+            <input name="eRecurMonth" type="text" size="2" maxlength="2" value="MM">/
+            <input name="eRecurDay" type="text" size="2" maxlength="2" value="DD">/
+            <input name="eRecurYear" type="text" size="4" maxlength="4" value="YYYY">
+            <br>
+            <button type="submit" form="addEvent">Submit</button>
+        </form>
+        <hr>
+        <h1>Edit or Delete an Event</h1>
+        <form class="inputText" action="editEvent" method="GET" id="selectMonth">
+            <select name="selectMonth">
+                <option value="">Month</option>
+                <option value="01">January</option>
+                <option value="02">February</option>
+                <option value="03">March</option>
+                <option value="04">April</option>
+                <option value="05">May</option>
+                <option value="06">June</option>
+                <option value="07">July</option>
+                <option value="08">August</option>
+                <option value="09">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
             </select>
-            <input id="eventName" type="text" maxlength="100" size="100" value="Enter Your Event Name">
-            <br>
-            <input id="month" type="text" size="2" maxlength="2" value="MM">/
-            <input type="text" id="day" size="2" maxlength="2" value="DD">/
-            <input id="year" type="text" size="4" maxlength="4" value="YYYY">
-            <br>
-            <hr>
-
+            <input name="selectYear" type="text" size="4" maxlength="4" value="YYYY">
+            <button type="submit" form="selectMonth">Submit</button>
         </form>
     </body>
 </html>
-
-{{!-- CREATE TABLE Calendar (   
-id serial  NOT NULL,    
-Event_name varchar(100)  NOT NULL, 
-Week_long boolean NOT NULL,
-Year int NOT NULL,  
-Month varchar(10) NOT NULL,  
-Day int NOT NULL,  
-CONSTRAINT Calendar_pk PRIMARY KEY (id)
-); --}}

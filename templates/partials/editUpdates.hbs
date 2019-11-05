@@ -1,11 +1,12 @@
-<updates>
+<editUpdates>
+    <form action="changeUpdates" name="changeUpdates" class="inputText" method="POST" id="changeUpdates">
     {{#each updates}}
-    <form action="post" class="inputtext" id="update">
-        <input type="text" id="updateTitle" maxlength="100" size="101" value="{{this.title}}">
+        <input type="text" name="updates[{{@index}}][title]" maxlength="100" size="101" value="{{this.title}}">
         <br>
-        <textarea name="updateText" id="updateText" cols="76" rows="10">{{this.update_text}}</textarea>
-        <input type="submit" value="Edit Update">
-    </form>
+        <textarea name="updates[{{@index}}][updateText]" cols="76" rows="10">{{this.update_text}}</textarea>
+        <input type="hidden" name="updates[{{@index}}][id]" value={{this.id}}>
     <hr>
     {{/each}}
-</updates>
+        <button type="submit" form="changeUpdates">Submit</button>
+    </form>
+</editUpdates>

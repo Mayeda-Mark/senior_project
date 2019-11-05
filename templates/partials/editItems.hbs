@@ -1,12 +1,12 @@
 <editItems>
-    <form action="updateStock" class="inputtext" id="updateStock" method="GET">
+    <form action="updateStock" class="inputtext" id="updateStock" method="POST">
     {{#each table}}
-        <input name="itemName" id="itemName" type="text" maxlength="25" size="25" value="{{this.product_name}}">
+        <input name="stock[{{@index}}][itemName]" type="text" maxlength="25" size="25" value="{{this.product_name}}">
         <br>
-        <textarea name="itemDescription" id="itemDescription" cols="76" rows="10">{{this.description}}</textarea>
+        <textarea name="stock[{{@index}}][itemDescription]" cols="76" rows="10">{{this.description}}</textarea>
         <br>
-        <input name="price" id="price" type="text" size="6" value="{{this.price}}">
-        <input name="quantity" id="quantity" type="text" size="6" value="{{this.inventory}}">
+        <input name="stock[{{@index}}][price]" type="text" size="6" value="{{this.price}}">
+        <input name="stock[{{@index}}][quantity]" type="text" size="6" value="{{this.inventory}}">
     <hr>
     {{/each}}
     <button type="submit">Submit</button>

@@ -1,9 +1,7 @@
 const express = require('express');
-const { Pool } = require('pg');
 const router = new express.Router();
 const db = require('../db/dbFunctions');
-const connectionString = process.env.DATABASE_URL || 'postgres://shrrdpdlinqgpf:27ffb3fc195dd896f00335db1c2b4fcbe229c23a3255cd1e5dcec86373faa3ee@ec2-54-235-180-123.compute-1.amazonaws.com:5432/defe8vag2516cd?ssl=true';
-const pool = new Pool({connectionString: connectionString});
+const async = require('async');
 
 
 router.get('', (req, res) => {
@@ -13,9 +11,12 @@ router.get('', (req, res) => {
 });
 
 router.get('/calendar', (req, res) => {
-    res.render('public/calendar', {
-        title: 'Calendar'
-    });
+    db.getEvents((err, result) => {
+        res.render('public/calendar', {
+            title: 'Calendar',
+            event: result
+        });
+    })
 });
 
 router.get('/connect', (req, res) => {
@@ -41,6 +42,5 @@ router.get('/updates', (req, res) => {
         });
     });
 });
-
 
 module.exports = router

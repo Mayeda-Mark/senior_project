@@ -12,11 +12,12 @@
         <h1>Edit and Update</h1>
         {{>editUpdates}}
         <h1>Create an Update</h1>
-        <form class="inputText" id="update" action="">
+        <form class="inputText" id="addUpdate" action="editUpdate" method="POST" enctype="multipart/form-data">
             <input name="updateTitle" id="Updatetitle" type="text" maxlength="100" size="101" value="Enter Your Title"><br>
             <textarea name="updateText" id="updateText" cols="76" rows="10">Enter Your Updates</textarea>
             <br>
-            <input type="submit" value="Submit">
+            Add Image:<input type="file" name="updateImg" />
+            <button type="submit" form="addUpdate">Submit</button>
         </form>
         <hr>
     </body>

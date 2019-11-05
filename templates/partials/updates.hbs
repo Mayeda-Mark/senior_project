@@ -1,6 +1,10 @@
 <updates>
     {{#each updates}}
-    <h2>{{this.title}}</h2>
+    <h2>{{this.title}} - {{this.date}}</h2>
+    {{#if this.img_path}}
+    <img src="{{this.img_path}}" alt="{{this.title}}" width="25%" height="25%">
+    <br>
+    {{/if}}
     <p>{{this.update_text}}</p>
     <hr>
     {{/each}}

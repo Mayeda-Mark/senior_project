@@ -1,12 +1,12 @@
 <updateDropdown>
-    <form id="deleteUpdate" action="">
-        <select name="updates" id="dropDown">
+    <form id="deleteUpdate" action="deleteUpdate" method="GET">
+        <select name="deleteTitle" id="dropDown">
             <option value="" selected>-Select-</option>
             {{#each dropdown}}
-            <option>{{this.title}}</option>
+            <option value="{{this.title}}">{{this.title}}</option>
             {{/each}}
         </select>
         <br>
-        <input type="submit" value="Submit">
+        <button type="submit" form="deleteUpdate">Submit</button>
     </form>
 </updateDropdown>
