@@ -1,5 +1,5 @@
 <editItems>
-    <form action="updateStock" class="inputtext" id="updateStock" method="POST">
+    <form action="updateStock" class="inputtext" name="updateStock" id="updateStock" method="POST" style="display: none;">
     {{#each table}}
         <input name="stock[{{@index}}][itemName]" type="text" maxlength="25" size="25" value="{{this.product_name}}">
         <br>
@@ -9,6 +9,6 @@
         <input name="stock[{{@index}}][quantity]" type="text" size="6" value="{{this.inventory}}">
     <hr>
     {{/each}}
-    <button type="submit">Submit</button>
+    <button class="btn" type="submit">Submit</button>
     </form>
 </editItems>

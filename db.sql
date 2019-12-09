@@ -20,6 +20,14 @@ VALUES ('Marks Birthday', '2019-10-27');
 Insert Into Calendar (Event_name, Start_date, Days_of_week, Start_recurring, End_recurring)
 VALUES ('Recurring Test', '2019-10-01', '{3}', '2019-10-01', '2019-10-30');
 
+CREATE TABLE Login (
+    id serial NOT NULL,
+    user_name varchar(255) NOT NULL,
+    password varchar(255) NOT NULL,
+    token varchar(255),
+    CONSTRAINT User_pk PRIMARY KEY (id)
+);
+
 CREATE TABLE Updates (   
 id serial  NOT NULL,    
 Title varchar(100)  NOT NULL,    

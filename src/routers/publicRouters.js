@@ -6,7 +6,7 @@ const async = require('async');
 
 router.get('', (req, res) => {
     res.render('public/home', {
-        title: 'Home'
+        title: 'Welcome'
     });
 });
 
@@ -28,7 +28,7 @@ router.get('/connect', (req, res) => {
 router.get('/stock', (req, res) => {
     db.getStock((error, result) => {
         res.render('public/stock', {
-            title: 'Here\'s What We\'re Baking Today',
+            title: 'Here\'s what we\'re baking today',
             table: result
         });
     });

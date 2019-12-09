@@ -1,5 +1,5 @@
 <deleteStock>
-    <form class="dropDown" method="get" action="deleteStock" id="removeStock">
+    <form class="dropDown" method="get" action="deleteStock" id="removeStock" style="display: none;">
         <select name="stock" id="dropDown">
                 <option value="" selected>-Select-</option>
                 {{#each dropdown}}
@@ -7,6 +7,6 @@
                 {{/each}}
             </select>
         <br>
-        <button type="submit" form="removeStock">Submit</button>
+        <button class="btn" type="submit" form="removeStock">Submit</button>
     </form>
 </deleteStock>

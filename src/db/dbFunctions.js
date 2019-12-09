@@ -2,7 +2,11 @@ const { Pool } = require('pg');
 const connectionString = process.env.DATABASE_URL || 'postgres://shrrdpdlinqgpf:27ffb3fc195dd896f00335db1c2b4fcbe229c23a3255cd1e5dcec86373faa3ee@ec2-54-235-180-123.compute-1.amazonaws.com:5432/defe8vag2516cd?ssl=true';
 const pool = new Pool({connectionString: connectionString});
 const async = require('async');
-
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+//****************************************** */
+const JWT_SECRET = 'piesaredeliciousandiwanttoeatthem';
+//******************************************* */
 
 //*****************Stock************************/
 //**************Stock Dropdown***********************/
@@ -150,6 +154,7 @@ const getEvents = (callback) => {
     });
 }
 
+//***************Get Edit Events***********************/
 const getEditEvents = (selectDate, callback) => {
     const sql = "SELECT * FROM Calendar WHERE start_year_month = '" + selectDate + "'";
     pool.query(sql, (err, result) => {
@@ -176,6 +181,7 @@ const addEvent = (eventName, sDate, sYearMonth, eDate, daysOfWeek, sRecurring, e
         });
     } else if (eDate && sRecurring){
         console.log('Firing eDate with recurring');
+        console.log(daysOfWeek);
         const params2 = [eventName, sDate, sYearMonth, eDate, daysOfWeek, sRecurring, eRecurring];
         const sql2 = 'INSERT INTO Calendar (event_name, start_date, start_year_month, end_date, days_of_week, start_recurring, end_recurring) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *';
         pool.query(sql2, params2, (err, result2) => {
@@ -186,6 +192,7 @@ const addEvent = (eventName, sDate, sYearMonth, eDate, daysOfWeek, sRecurring, e
             callback(null, result2.rows);
         });
     } else if (!eDate && sRecurring){
+        console.log(daysOfWeek);
         console.log('Firing recurring without eDate');
         const params3 = [eventName, sDate, sYearMonth, daysOfWeek, sRecurring, eRecurring];
         const sql3 = 'INSERT INTO Calendar (event_name, start_date, start_year_month, days_of_week, start_recurring, end_recurring) VALUES($1, $2, $3, $4, $5, $6) RETURNING *';
@@ -209,6 +216,7 @@ const addEvent = (eventName, sDate, sYearMonth, eDate, daysOfWeek, sRecurring, e
     }
 }
 
+//***************Edit Event***********************/
 const editEvents = (events, callback) => {
     async.each(events, (event, cb) => {
         if(event.endDate && !event.startRecurring) {
@@ -222,8 +230,8 @@ const editEvents = (events, callback) => {
                 cb();
             });
         } else if(event.endDate && event.startRecurring) {
-            const params2 = [event.eventName, event.startDate, event.endDate, event.startRecurring, event.endRecurring, event.id];
-            const sql2 = 'UPDATE Calendar SET event_name = $1, start_date = $2, end_date = $3, start_recurring = $4, end_recurring = $5,  WHERE id = $6';
+            const params2 = [event.eventName, event.startDate, event.endDate, event.daysOfWeek,event.startRecurring, event.endRecurring, event.id];
+            const sql2 = 'UPDATE Calendar SET event_name = $1, start_date = $2, end_date = $3, days_of_week = $4, start_recurring = $5, end_recurring = $6,  WHERE id = $7';
             pool.query(sql2, params2, (err, result2) => {
                 if(err){
                     console.log("An error with the database has occurred while editing the Events");
@@ -232,8 +240,8 @@ const editEvents = (events, callback) => {
                 cb();
             });
         } else if(!event.endDate && event.startRecurring) {
-            const params3 = [event.eventName, event.startDate, event.startRecurring, event.endRecurring, event.id];
-            const sql3 = 'UPDATE Calendar SET event_name = $1, start_date = $2, start_recurring = $3, end_recurring = $4  WHERE id = $5';
+            const params3 = [event.eventName, event.startDate, event.daysOfWeek, event.startRecurring, event.endRecurring, event.id];
+            const sql3 = 'UPDATE Calendar SET event_name = $1, start_date = $2, days_of_week = $3, start_recurring = $4, end_recurring = $5  WHERE id = $6';
             pool.query(sql3, params3, (err, result3) => {
                 if(err){
                     console.log("An error with the database has occurred while editing the Events");
@@ -255,6 +263,7 @@ const editEvents = (events, callback) => {
     }, callback);
 }
  
+//***************Delete Event***********************/
 const deleteEvent = (id, callback) => {
     const sql = "DELETE FROM Calendar WHERE id ='" + id + "'";
     pool.query(sql, (err, result) => {
@@ -263,6 +272,42 @@ const deleteEvent = (id, callback) => {
             console.log(err);
         }
         callback();
+    });
+}
+
+//****************User************************/
+//***************Create User***********************/
+const createUser = (userName, password) => {
+    const sql = 'INSERT INTO Login(user_name, password) VALUES ($1, $2)'
+    const params = [userName, password];
+    pool.query(sql, params, (err, result) => {
+        if(err) {
+			console.log("An error with the database has occurred");
+			return console.log(err);
+        }
+    });
+}
+
+//***************Get Hash***********************/
+const getHash = (userName, callback) => {
+    const sql = "SELECT password FROM Login WHERE user_name = '" + userName + "'";
+    pool.query(sql, (err, result) => {
+        if(err) {
+			console.log("An error with the database has occurred while finding the user");
+			return console.log(err);
+        }
+        callback(null, result.rows);
+    });
+}
+
+const getUser = (userName, callback) => {
+    const sql = "SELECT * FROM Login WHERE user_name = '" + userName + "'";
+    pool.query(sql, (err, result) => {
+        if(err) {
+			console.log("An error with the database has occurred while finding the user");
+			return console.log(err);
+        }
+        callback(null, result.rows);
     });
 }
 
@@ -281,5 +326,8 @@ module.exports = {
     addEvent,
     editEvents,
     deleteEvent,
-    getEditEvents
+    getEditEvents,
+    createUser,
+    getHash,
+    getUser
 }

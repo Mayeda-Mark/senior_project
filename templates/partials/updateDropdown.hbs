@@ -1,5 +1,5 @@
 <updateDropdown>
-    <form id="deleteUpdate" action="deleteUpdate" method="GET">
+    <form id="deleteUpdate" action="deleteUpdate" method="GET" style="display: none;">
         <select name="deleteTitle" id="dropDown">
             <option value="" selected>-Select-</option>
             {{#each dropdown}}
@@ -7,6 +7,6 @@
             {{/each}}
         </select>
         <br>
-        <button type="submit" form="deleteUpdate">Submit</button>
+        <button class="btn" type="submit" form="deleteUpdate">Submit</button>
     </form>
 </updateDropdown>

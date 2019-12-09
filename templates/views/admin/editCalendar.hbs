@@ -3,14 +3,21 @@
     <head>
         <title>Edit Calendar</title>
         {{>displayCalendar}}
+        <link rel="stylesheet" type="text/css" href="/css/bdb.css">
+        <script src="/js/validate.js"></script>
+        <script src="/js/adminFunctions.js"></script>
     </head>
     <body>
         {{>editHeaders}}
         <hr>
         <div id="calendar"></div>
         <hr>
-        <h1>New Event</h1>
-        <form class="inputText" action="editCalendar" method="POST" id="addEvent">
+        <input id="addEventBtn" class="btn" type="button" onclick="showAddEvent()" value="Add an Event">
+        <input id="editEvents" class="btn" type="button" onclick="editEvents()" value="Edit or Delete an Event">
+        <input id="calendarCancel" class="btn" type="button" onclick="calendarCancel()" value="Cancel" style="display: none;">
+        <br>
+        {{!-- EDIT EVENT --}}
+        <form class="inputText" action="editCalendar" method="POST" id="addEvent" style="display: none;">
             <input name="eventName" type="text" maxlength="100" size="100" value="Enter Your Event Name">
             <br>
             Start Date:
@@ -42,11 +49,10 @@
             <input name="eRecurDay" type="text" size="2" maxlength="2" value="DD">/
             <input name="eRecurYear" type="text" size="4" maxlength="4" value="YYYY">
             <br>
-            <button type="submit" form="addEvent">Submit</button>
+            <button class="btn" type="submit" form="addEvent">Submit</button>
         </form>
-        <hr>
-        <h1>Edit or Delete an Event</h1>
-        <form class="inputText" action="editEvent" method="GET" id="selectMonth">
+        {{!-- ADD EVENT --}}
+        <form class="inputText" action="editEvent" method="GET" id="selectMonth" style="display: none;">
             <select name="selectMonth">
                 <option value="">Month</option>
                 <option value="01">January</option>
@@ -63,7 +69,9 @@
                 <option value="12">December</option>
             </select>
             <input name="selectYear" type="text" size="4" maxlength="4" value="YYYY">
-            <button type="submit" form="selectMonth">Submit</button>
+            <button class="btn" type="submit" form="selectMonth">Submit</button>
         </form>
+        <hr>
+        {{>footer}}
     </body>
 </html>

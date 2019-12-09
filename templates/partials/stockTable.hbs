@@ -1,20 +1,20 @@
 <stockTable>
     <table>
-        <tr>
-            <th>Name</th>
-            <th>Image</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Quantity</th>
-        </tr>
-        {{#each table}}
-        <tr>
-            <td>{{this.product_name}}</td>
-            <td><img src="{{{this.img_path}}}" alt="{{{this.product_name}}}" width="100px" height="100px"></td>
-            <td>{{this.description}}</td>
-            <td>{{this.price}}</td>
-            <td>{{this.inventory}}</td>
-        </tr>
-        {{/each}}
-    </table>
+            <tr>
+                <th>Name</th>
+                <th>Image</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Quantity</th>
+            </tr>
+            {{#each table}}
+            <tr>
+                <td>{{this.product_name}}</td>
+                <td><img src="{{{this.img_path}}}" alt="{{{this.product_name}}}" width="100px" height="100px"></td>
+                <td>{{this.description}}</td>
+                <td>{{this.price}}</td>
+                <td>{{this.inventory}}</td>
+            </tr>
+            {{/each}}
+        </table>
 </stockTable>

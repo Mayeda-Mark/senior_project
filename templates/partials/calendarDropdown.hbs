@@ -1,0 +1,12 @@
+<calendarDropdown>
+    <form id="deleteEvent" action="deleteEvent" method="GET">
+        <select name="deleteId">
+            <option value="" selected>-Select-</option>
+            {{#each event}}
+            <option value="{{this.id}}">{{this.event_name}}</option>
+            {{/each}}
+        </select>
+        <br>
+        <button type="submit" form="deleteEvent">Submit</button>
+    </form>
+</calendarDropdown>

@@ -2,18 +2,23 @@
 <html>
     <head>
         <title>Edit Stock</title>
+        <script src="/js/validate.js"></script>
+        <script src="/js/adminFunctions.js"></script>
+        <link rel="stylesheet" type="text/css" href="/css/bdb.css">
     </head>
     <body>
         {{>editHeaders}}
         <hr>
         {{>stockTable}}
         <hr>
-        <h1>Delete an Item</h1>
-        {{>deleteStock}}
-        <h1>Edit an Item</h1>
+        <input id="deleteButton" class="btn" type="button" onclick="showDelete()" value="Delete Stock">
+        <input id="editButton" class="btn" type="button" onclick="showEdit()" value="Edit Stock">
+        <input id="addButton" class="btn" type="button" onclick="showAdd()" value="Add Stock">
+        <input id="stockCancel" class="btn" type="button" onclick="stockCancel()" value="Cancel" style="display: none;">
+        <br>
         {{>editItems}}
-        <h1>Add an Item</h1>
-        <form class="inputText" method="post" action="editStock" id="addStock" enctype="multipart/form-data">
+        {{>deleteStock}}
+        <form class="inputText" method="post" action="editStock" onsubmit="return validateAddStock();" name="addStock" enctype="multipart/form-data" id="addStock" style="display: none;">
             <input name="itemName" id="itemName" type="text" maxlength="25" size="25" value="Enter Your Title">
             <br>
             <textarea name="itemDescription" id="itemDescription" cols="76" rows="10">Enter Your Updates</textarea>
@@ -22,7 +27,9 @@
             <input name="quantity" id="quantity" type="text" size="6" value="Quantity">
             <br>
             Add Image:<input type="file" id="stockImg" name="stockImg" />
-            <button type="submit" form="addStock">Submit</button>
+            <input class="btn" type="submit" form="addStock" value="Submit">
         </form>
+        <hr>
+        {{>footer}}
     </body>
 </html>

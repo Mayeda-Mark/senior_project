@@ -2,23 +2,104 @@ const express = require('express');
 const router = new express.Router();
 const db = require('../db/dbFunctions');
 const async = require('async');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const auth = require('../middleware/auth');
+const jwt = require('jsonwebtoken');
 const multer = require('multer');
 const upload =  multer({dest: 'public/img/uploads'});
+const session = require('express-session');
 
-router.get('/login', (req, res) => {
+const app = express();
+
+app.use(session({
+    name: 'sid',
+    resave: false,
+    saveUninitialized: false,
+    secret: 'piesaredeliciousandiwanttoeatthem',
+    cookie: {
+        maxAge: 36000000,
+        sameSite: true
+    }
+}));
+
+const redirectLogin = (req, res, next) => {
+    //***************UNCOMMENT!!!***************** */
+    // if( !req.session.userId) {
+    //     res.redirect('/login');
+    // } else {
+        next();
+    // }
+}
+
+const redirectHome = (req, res, next) => {
+    if( req.session.userId) {
+        res.redirect('/editHome');
+    } else {
+        next();
+    }
+}
+
+//*****************Login************************/
+router.get('/login', redirectHome, (req, res) => {
     res.render('admin/login', {
         title: 'Welcome'
     });
 });
 
-router.get('/editHome', (req, res) => {
+router.post('/createUser', (req, res) => {
+    bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
+        db.createUser(req.body.username, hash);
+    });
+    res.render('admin/login'), {
+        title: 'Welcome'
+    }    
+});
+
+router.post('/login', (req, res) => {
+    const { userId } = req.session;
+    db.getHash(req.body.username, async (error, hash) => {
+        try {
+            console.log(req.body.password);
+            const match = await bcrypt.compare(req.body.password, hash[0].password);
+            if(match) {
+                db.getUser(req.body.username, (err, user) => {
+                    console.log(user);
+                    req.session.userId = user[0].id;
+                    return res.redirect('/editHome');
+                });
+            } 
+            else{
+                res.render('admin/login'), {
+                    title: 'Welcome',
+                    message: 'Login unsuccessful.  Please try again'
+                }
+            }
+        }
+        catch(error) {
+            console.log('firing catch');
+            console.log(error);
+        }
+    });
+});
+
+router.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        res.clearCookie('sid');
+        res.redirect('/login');
+    })
+})
+
+//*****************Home************************/
+router.get('/editHome', redirectLogin, (req, res) => {
+    console.log(req.session);
     res.render('admin/editHome', {
         title: "Welcome"
     });
 });
 
 //*****************Stock************************/
-router.get('/editStock', (req,res) => {
+router.get('/editStock', redirectLogin, (req, res) => {
     db.getStockDropdown((error, result1) => {
         db.getStock((error, result2) => {
             res.render('admin/editStock', {
@@ -30,7 +111,7 @@ router.get('/editStock', (req,res) => {
     });
 });
 
-router.post('/editStock', upload.single('stockImg'), (req,res) => {
+router.post('/editStock', redirectLogin, upload.single('stockImg'), (req,res) => {
     const path = '/img/uploads/' + req.file.filename;
     const itemName = req.body.itemName;
     const itemdescription = req.body.itemDescription;
@@ -53,7 +134,7 @@ router.post('/editStock', upload.single('stockImg'), (req,res) => {
     });
 });
 
-router.get('/deleteStock', (req, res) => {
+router.get('/deleteStock', redirectLogin, (req, res) => {
     const itemName = req.query.stock;
     db.removeStock(itemName);
     db.getStockDropdown((error, result1) => {
@@ -67,7 +148,7 @@ router.get('/deleteStock', (req, res) => {
     });
 });
 
-router.post('/updateStock', (req, res) => {
+router.post('/updateStock', redirectLogin, (req, res) => {
     async.series([
         db.updateStock.bind(db, req.body.stock),
         db.getStockDropdown.bind(db),
@@ -87,7 +168,7 @@ router.post('/updateStock', (req, res) => {
 
 
 //*****************Updates*********************/
-router.get('/editUpdates', (req,res) => {
+router.get('/editUpdates', redirectLogin, (req,res) => {
     db.updateDropdown((error1, result1) => {
         db.getUpdates((error2, result2) => {
             res.render('admin/editUpdates', {
@@ -99,7 +180,7 @@ router.get('/editUpdates', (req,res) => {
     });
 });
 
-router.post('/editUpdate', upload.single('updateImg'), (req, res) => {
+router.post('/editUpdate', redirectLogin, upload.single('updateImg'), (req, res) => {
     var path = null;
     if(req.file && req.file.filename != undefined){
         var path = '/img/uploads/' + req.file.filename;
@@ -123,7 +204,7 @@ router.post('/editUpdate', upload.single('updateImg'), (req, res) => {
     });
 });
 
-router.get('/deleteUpdate', (req, res) => {
+router.get('/deleteUpdate', redirectLogin, (req, res) => {
     const title = req.query.deleteTitle;
     db.deleteUpdate(title);
     db.updateDropdown((error1, result1) => {
@@ -138,7 +219,7 @@ router.get('/deleteUpdate', (req, res) => {
 });
 
 
-router.post('/changeUpdates', (req,res) => {
+router.post('/changeUpdates', redirectLogin, (req,res) => {
     async.series([
         db.editUpdates.bind(db, req.body.updates),
         db.updateDropdown.bind(db),
@@ -156,9 +237,8 @@ router.post('/changeUpdates', (req,res) => {
     });
 });
 
-//*****************Calenda*********************/
-
-router.get('/editCalendar', (req,res) => {
+//*****************Calendar*********************/
+router.get('/editCalendar', redirectLogin, (req,res) => {
     db.getEvents((err, result) => {
         res.render('admin/editCalendar', {
             title: 'Edit Calendar',
@@ -167,7 +247,7 @@ router.get('/editCalendar', (req,res) => {
     }); 
 })
 
-router.post('/editCalendar', (req, res) => {
+router.post('/editCalendar', redirectLogin, (req, res) => {
     const name = req.body.eventName;
     const sDate = req.body.sYear + '-' + req.body.sMonth + '-' + req.body.sDay;
     const sYearMonth = req.body.sYear + '-' + req.body.sMonth;
@@ -207,10 +287,9 @@ router.post('/editCalendar', (req, res) => {
     });
 });
 
-router.get('/editEvent', (req, res) => {
+router.get('/editEvent', redirectLogin, (req, res) => {
     var editDate = req.query.selectYear + '-' + req.query.selectMonth;
     db.getEditEvents(editDate, (err, result) => {
-        console.log(result);
         res.render('admin/editEvent', {
             title: 'Edit Events',
             event: result
@@ -218,7 +297,7 @@ router.get('/editEvent', (req, res) => {
     });
 });
 
-router.post('/editEvent', (req, res) => {
+router.post('/editEvent', redirectLogin, (req, res) => {
     async.series([
         db.editEvents.bind(db, req.body.editEvent),
         db.getEvents.bind(db)
@@ -227,7 +306,6 @@ router.post('/editEvent', (req, res) => {
             res.status(500).send('Error: ' + error);
             return;
         }
-        console.log(result[1]);
         res.render('admin/editCalendar', {
             title: 'Edit Calendar',
             event: result[1]
@@ -235,7 +313,7 @@ router.post('/editEvent', (req, res) => {
     });
 });
 
-router.get('/deleteEvent', (req, res) => {
+router.get('/deleteEvent', redirectLogin, (req, res) => {
     async.series([
         db.deleteEvent.bind(db, req.query.deleteId),
         db.getEvents.bind(db)
@@ -252,4 +330,3 @@ router.get('/deleteEvent', (req, res) => {
 });
 
 module.exports = router;
-

@@ -1,5 +1,5 @@
 <editUpdates>
-    <form action="changeUpdates" name="changeUpdates" class="inputText" method="POST" id="changeUpdates">
+    <form action="changeUpdates" name="changeUpdates" class="inputText" method="POST" id="changeUpdates" style="display: none;">
     {{#each updates}}
         <input type="text" name="updates[{{@index}}][title]" maxlength="100" size="101" value="{{this.title}}">
         <br>
@@ -7,6 +7,6 @@
         <input type="hidden" name="updates[{{@index}}][id]" value={{this.id}}>
     <hr>
     {{/each}}
-        <button type="submit" form="changeUpdates">Submit</button>
+        <button class="btn" type="submit" form="changeUpdates">Submit</button>
     </form>
 </editUpdates>

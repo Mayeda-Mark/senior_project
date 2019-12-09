@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Edit Events</title>
+        <link rel="stylesheet" type="text/css" href="/css/bdb.css">
+    </head>
+    <body>
+        {{>editHeaders}}
+        <hr>
+        <form action="editEvent" method="POST" class="inputText" id="editEvents">
+            {{#each event}}
+                <input name="editEvent[{{@index}}][eventName]" type="text" maxlength="25" size="25" value="{{this.event_name}}">
+                <br>
+                Start Date: <input name="editEvent[{{@index}}][startDate]" type="text" maxlength="10" size="10" value="{{this.start_date}}">
+                {{#if this.end_date}}
+                End Date: <input name="editEvent[{{@index}}][endDate]" type="text" maxlength="10" size="10" value="{{this.end_date}}">
+                {{/if}}
+                <br>
+                {{#if this.start_recurring}}
+                Start Recurring:<input name="editEvent[{{@index}}][startRecurring]" type="text" maxlength="10" size="10" value="{{this.start_recurring}}">
+                End Recurring:<input name="editEvent[{{@index}}][endRecurring]" type="text" maxlength="10" size="10" value="{{this.end_recurring}}">
+                <br>
+                Days of the Week:
+                {{#if this.days_of_week}}
+                <input type="checkbox" name="editEvent[{{@index}}][daysOfWeek]" value="0" {{#if (daysOfWeek days_of_week 0)}}checked{{/if}}>Sunday
+                <input type="checkbox" name="editEvent[{{@index}}][daysOfWeek]" value="1" {{#if (daysOfWeek days_of_week 1)}}checked{{/if}}>Monday
+                <input type="checkbox" name="editEvent[{{@index}}][daysOfWeek]" value="2" {{#if (daysOfWeek days_of_week 2)}}checked{{/if}}>Tuesday
+                <input type="checkbox" name="editEvent[{{@index}}][daysOfWeek]" value="3" {{#if (daysOfWeek days_of_week 3)}}checked{{/if}}>Wednesday
+                <input type="checkbox" name="editEvent[{{@index}}][daysOfWeek]" value="4" {{#if (daysOfWeek days_of_week 4)}}checked{{/if}}>Thursday
+                <input type="checkbox" name="editEvent[{{@index}}][daysOfWeek]" value="5" {{#if (daysOfWeek days_of_week 5)}}checked{{/if}}>Friday
+                <input type="checkbox" name="editEvent[{{@index}}][daysOfWeek]" value="6" {{#if (daysOfWeek days_of_week 6)}}checked{{/if}}>Saturday
+                {{/if}}
+                {{/if}}
+                <input type="hidden" name="editEvent[{{@index}}][id]" value={{this.id}}>
+                <hr>
+            {{/each}}
+            <br>
+            <button type="submit" form="editEvents">Submit</button>
+        </form>
+        <hr>
+        <h1>Delete and Event</h1>
+        {{>calendarDropdown}}
+        <hr>
+        {{>footer}}
+    </body>
+</html>
