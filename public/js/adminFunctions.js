@@ -94,3 +94,15 @@ function calendarCancel() {
     document.getElementById('addEventBtn').style.display = 'inline';
     document.getElementById('calendarCancel').style.display = 'none';
 }
+
+function recurringButton() {
+    document.getElementById('recurring').style.display = 'inline';
+    document.getElementById('recurringBtn').style.display = 'none';
+    document.getElementById('recurringCancel').style.display = 'inline';
+}
+
+function cancelRecurring() {
+    document.getElementById('recurring').style.display = 'none';
+    document.getElementById('recurringBtn').style.display = 'inline';
+    document.getElementById('recurringCancel').style.display = 'none';
+}

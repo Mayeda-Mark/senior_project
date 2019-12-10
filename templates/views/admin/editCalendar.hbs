@@ -16,20 +16,24 @@
         <input id="editEvents" class="btn" type="button" onclick="editEvents()" value="Edit or Delete an Event">
         <input id="calendarCancel" class="btn" type="button" onclick="calendarCancel()" value="Cancel" style="display: none;">
         <br>
-        {{!-- EDIT EVENT --}}
-        <form class="inputText" action="editCalendar" method="POST" id="addEvent" style="display: none;">
+        {{!-- ADD EVENT --}}
+        <form class="inputText" action="editCalendar" method="POST" name="addEvent" id="addEvent" onsubmit="return validateAddEvent();" style="display: none;">
             <input name="eventName" type="text" maxlength="100" size="100" value="Enter Your Event Name">
             <br>
-            Start Date:
-            <input name="sMonth" type="text" size="2" maxlength="2" value="MM">/
-            <input name="sDay" type="text" size="2" maxlength="2" value="DD">/
-            <input name="sYear" type="text" size="4" maxlength="4" value="YYYY">
+            Start Date (MM/DD/YYY):
+            <input name="sMonth" type="text" size="2" maxlength="2">/
+            <input name="sDay" type="text" size="2" maxlength="2">/
+            <input name="sYear" type="text" size="4" maxlength="4">
             <br>
-            End Date (Leave blank if event is just one day long):
-            <input name="eMonth" type="text" size="2" maxlength="2" value="MM">/
-            <input name="eDay" type="text" size="2" maxlength="2" value="DD">/
-            <input name="eYear" type="text" size="4" maxlength="4" value="YYYY">
+            End Date (Leave blank if event is just one day long) (MM/DD/YYY):
+            <input name="eMonth" type="text" size="2" maxlength="2">/
+            <input name="eDay" type="text" size="2" maxlength="2">/
+            <input name="eYear" type="text" size="4" maxlength="4">
             <br>
+            <input id="recurringBtn" class="btn" type="button" onclick="recurringButton();" value="Recurring">
+            <input id="recurringCancel" class="btn" type="button" onclick="cancelRecurring();" value="Cancel" style="display: none;">
+            <br>
+            <div id="recurring" style="display: none;">
             Days of the Week:
             <input type="checkbox" name="daysOfWeek" value="0">Sunday
             <input type="checkbox" name="daysOfWeek" value="1">Monday
@@ -39,16 +43,17 @@
             <input type="checkbox" name="daysOfWeek" value="5">Friday
             <input type="checkbox" name="daysOfWeek" value="6">Saturday
             <br>
-            Start Recurrance:
-            <input name="sRecurMonth" type="text" size="2" maxlength="2" value="MM">/
-            <input name="sRecurDay" type="text" size="2" maxlength="2" value="DD">/
-            <input name="sRecurYear" type="text" size="4" maxlength="4" value="YYYY">
+            Start Recurrance (MM/DD/YYY):
+            <input name="sRecurMonth" type="text" size="2" maxlength="2">/
+            <input name="sRecurDay" type="text" size="2" maxlength="2">/
+            <input name="sRecurYear" type="text" size="4" maxlength="4">
             <br>
-            End Recurrance:
-            <input name="eRecurMonth" type="text" size="2" maxlength="2" value="MM">/
-            <input name="eRecurDay" type="text" size="2" maxlength="2" value="DD">/
-            <input name="eRecurYear" type="text" size="4" maxlength="4" value="YYYY">
+            End Recurrance (MM/DD/YYY):
+            <input name="eRecurMonth" type="text" size="2" maxlength="2">/
+            <input name="eRecurDay" type="text" size="2" maxlength="2">/
+            <input name="eRecurYear" type="text" size="4" maxlength="4">
             <br>
+            </div>
             <button class="btn" type="submit" form="addEvent">Submit</button>
         </form>
         {{!-- ADD EVENT --}}

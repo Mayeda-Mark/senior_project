@@ -24,6 +24,37 @@ function validateAddStock() {
     return true;
 }
 
+function validateAddUpdate() {
+    if(document.addUpdate.updateTitle.value == '') {
+        alert('Please Enter a title for your post');
+        return false;
+    }
+    if(document.addUpdate.updateText.value == '') {
+        alert('Please Enter a body for your post');
+        return false;
+    }
+    return true;
+}
+
+function validateAddEvent() {
+    if(document.addEvent.eventName.value == '') {
+        alert('Please Enter a title for your event');
+        return false;
+    }   
+    if(document.addEvent.sMonth.value == '') {
+        alert('Please Enter a valid date for your event');
+        return false;
+    }   
+    if(document.addEvent.sDay.value == '') {
+        alert('Please Enter a valid date for your event');
+        return false;
+    }   
+    if(document.addEvent.sYear.value == '') {
+        alert('Please Enter a valid date for your event');
+        return false;
+    } 
+    return true;  
+}
 // function validateEditStock() {
 //     for(let i = 0; i<document.updateStock.length; i++){
 //         console.log('Is this working?');

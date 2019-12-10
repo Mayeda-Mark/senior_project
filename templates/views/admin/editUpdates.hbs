@@ -17,7 +17,7 @@
         <br>
         {{>updateDropdown}}
         {{>editUpdates}}
-        <form class="inputText" id="addUpdate" action="editUpdate" method="POST" enctype="multipart/form-data" style="display: none;">
+        <form class="inputText" id="addUpdate" name="addUpdate" action="editUpdate" method="POST" enctype="multipart/form-data" style="display: none;" onsubmit="return validateAddUpdate();">
             <input name="updateTitle" id="Updatetitle" type="text" maxlength="100" size="101" value="Enter Your Title"><br>
             <textarea name="updateText" id="updateText" cols="76" rows="10">Enter Your Updates</textarea>
             <br>
