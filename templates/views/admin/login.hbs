@@ -2,23 +2,27 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="/css/bdb.css">
+        <script src="/js/adminFunctions.js"></script>
         <title>Login</title>
     </head>
     <body>
-        <a href="/editHome">Some login boxes will go here</a>
+        <h1>{{title}}</h1>
         <form action="login" method="POST" name="login" id="login">
-            Username:<input type="text" name="username" size="10" maxlength="10">
+            Username:<input type="text" name="username" size="10" maxlength="10" autocomplete="off">
             <br>
-            Password:<input type="text" name="password" size="10" maxlength="10">
+            Password:<input type="password" id="password" name="password" size="10" maxlength="10" autocomplete="off">
+            <br>
+            <input type="checkbox" onclick="showPassword()">Show Password
+            <br>
             <button class="btn" type="submit" form="login">Submit</button>
         </form>
-        <form action="createUser" method="POST" name="createUser" id="createUser">
+        {{!-- In case you need to add any users <form action="createUser" method="POST" name="createUser" id="createUser">
             Username:<input type="text" name="username" size="10" maxlength="10">
             <br>
             Password:<input type="text" name="password" size="10" maxlength="10">
             <button class="btn" type="submit" form="createUser">Submit</button>
-        </form>
-        {{#if this.message}}
+        </form> --}}
+        {{#if message}}
         <p style="color: red;">{{ message }}</p>
         {{/if}}
         <hr>

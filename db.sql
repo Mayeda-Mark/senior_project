@@ -24,7 +24,6 @@ CREATE TABLE Login (
     id serial NOT NULL,
     user_name varchar(255) NOT NULL,
     password varchar(255) NOT NULL,
-    token varchar(255),
     CONSTRAINT User_pk PRIMARY KEY (id)
 );
 
@@ -78,3 +77,6 @@ VALUES(
     2.50,
     10
 );
+
+-- TheBdbCaP
+-- AaTtHnGvBd

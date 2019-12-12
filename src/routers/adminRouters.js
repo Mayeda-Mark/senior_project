@@ -25,11 +25,11 @@ app.use(session({
 
 const redirectLogin = (req, res, next) => {
     //***************UNCOMMENT!!!***************** */
-    // if( !req.session.userId) {
-    //     res.redirect('/login');
-    // } else {
+    if( !req.session.userId) {
+        res.redirect('/login');
+    } else {
         next();
-    // }
+    }
 }
 
 const redirectHome = (req, res, next) => {
@@ -79,6 +79,10 @@ router.post('/login', (req, res) => {
         catch(error) {
             console.log('firing catch');
             console.log(error);
+            res.render('admin/login'), {
+                title: 'Welcome',
+                message: 'Login unsuccessful.  Please try again'
+            }
         }
     });
 });
