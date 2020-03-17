@@ -9,4 +9,35 @@
     <h1>
         {{title}}
     </h1>
+    <hr>
+        <div class="w3-content w3-section" style="max-width:500px; max-height:300px;">
+            <img class="mySlides w3-animate-fading" src="/img/bdb_logo.jpg" style="max-height:300px">
+            <img class="mySlides w3-animate-fading" src="/img/Slideshow1.png" style="max-height:300px">
+            <img class="mySlides w3-animate-fading" src="/img/Slideshow2.png" style="max-height:300px">
+            <img class="mySlides w3-animate-fading" src="/img/Slideshow3.png" style="max-height:300px">
+            <img class="mySlides w3-animate-fading" src="/img/Slideshow4.png" style="max-height:300px">
+            <img class="mySlides w3-animate-fading" src="/img/Slideshow5.png" style="max-height:300px">
+            <img class="mySlides w3-animate-fading" src="/img/Slideshow6.png" style="max-height:300px">
+            <img class="mySlides w3-animate-fading" src="/img/Slideshow7.png" style="max-height:300px">
+            <img class="mySlides w3-animate-fading" src="/img/Slideshow8.png" style="max-height:300px">
+            <img class="mySlides w3-animate-fading" src="/img/Slideshow9.png" style="max-height:300px">
+            <img class="mySlides w3-animate-fading" src="/img/Slideshow10.png" style="max-height:300px">
+        </div>
+
+        <script>
+        var myIndex = 0;
+        carousel();
+
+        function carousel() {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";  
+        }
+        myIndex++;
+        if (myIndex > x.length) {myIndex = 1}    
+        x[myIndex-1].style.display = "block";  
+        setTimeout(carousel, 9000);    
+        }
+        </script>
 </header>
