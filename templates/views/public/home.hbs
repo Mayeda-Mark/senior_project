@@ -3,10 +3,42 @@
     <head>
         <title>Welcome</title>
         <link rel="stylesheet" type="text/css" href="/css/bdb.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     </head>
     <body>
         {{>header}}
-        <img src="/img/bdb_logo.jpg" alt="Logo" style="width:1000px">
+        {{!-- <img src="/img/bdb_logo.jpg" alt="Logo" style="width:1000px"> --}}
+        <div class="w3-content w3-section" style="max-width:500px">
+            <img class="mySlides w3-animate-fading" src="/img/bdb_logo" style="width:100%">
+            <img class="mySlides w3-animate-fading" src="/img/Slideshow1" style="width:100%">
+            <img class="mySlides w3-animate-fading" src="/img/Slideshow2" style="width:100%">
+            <img class="mySlides w3-animate-fading" src="/img/Slideshow3" style="width:100%">
+            <img class="mySlides w3-animate-fading" src="/img/Slideshow4" style="width:100%">
+            <img class="mySlides w3-animate-fading" src="/img/Slideshow5" style="width:100%">
+            <img class="mySlides w3-animate-fading" src="/img/Slideshow6" style="width:100%">
+            <img class="mySlides w3-animate-fading" src="/img/Slideshow7" style="width:100%">
+            <img class="mySlides w3-animate-fading" src="/img/Slideshow8" style="width:100%">
+            <img class="mySlides w3-animate-fading" src="/img/Slideshow9" style="width:100%">
+            <img class="mySlides w3-animate-fading" src="/img/Slideshow10" style="width:100%">
+        </div>
+
+        <script>
+        var myIndex = 0;
+        carousel();
+
+        function carousel() {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";  
+        }
+        myIndex++;
+        if (myIndex > x.length) {myIndex = 1}    
+        x[myIndex-1].style.display = "block";  
+        setTimeout(carousel, 9000);    
+        }
+        </script>
         <hr>
         <p>Welcome to the Backdoor Bakery Pies and Cakes.  We make delicious pies and cakes for any occasion.  We recommend the cutie pies since they let you try more pies without the normal amount of guilt.  Above, you will find links that will take you to our event calendar, the various ways to connect with us, our updates blog and a list of some of the wonderful things that we're baking today. </p>
         <div id="hours">
